@@ -11,11 +11,9 @@ I) Create file with path `.vscode/settings.json` on your project and map your al
     }
 ```
 
-
 II) Go to line you want detect alias and search file
 
 III) Enter action  `jump` or find and input short key by action `aliasGoTo.jump`
-
 
 
 
