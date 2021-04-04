@@ -17,7 +17,8 @@ Modify your shortcut in `aliasGoTo.jum` action.
 ## Features
 
 I) Go to file with alias path
-
+ 
+![alt text](https://github.com/lcnghia95/alias-go-to/blob/master/images/jump2.gif "Gif demo")
 
 
 **Enjoy!**
