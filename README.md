@@ -17,18 +17,18 @@ Create file with path `.vscode/settings.json` on your project and map your alias
 
 Modify your shortcut at `aliasGoTo.jump` action.
 
-![alt text](https://github.com/lcnghia95/alias-go-to/blob/master/images/modifyCommand.png "Modify shortcut")
+![alt text](https://github.com/lcnghia95/alias-go-to/blob/master/images/command.png "command")
 
 ## Features
 
 
 Go to file with alias path use search action `>Alias go to`
  
-![alt text](https://github.com/lcnghia95/alias-go-to/blob/master/images/jump2.gif "Gif demo")
+![alt text](https://github.com/lcnghia95/alias-go-to/blob/master/images/jump2.gif "demo")
 
 
 Go to file with alias path use shortcut `shift+alt+w`
  
-![alt text](https://github.com/lcnghia95/alias-go-to/blob/master/images/jump.gif "Gif demo")
+![alt text](https://github.com/lcnghia95/alias-go-to/blob/master/images/jump.gif "demo")
 
 **Enjoy!**

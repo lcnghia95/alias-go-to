@@ -2,7 +2,7 @@
   "name": "alias-go-to",
 	"displayName": "Alias Go To File",
 	"description": "Go to file with path alias",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "lcnghia95",
 	"engines": {
 		"vscode": "^1.55.0"
@@ -13,6 +13,8 @@
 	"activationEvents": [
         "onCommand:aliasGoTo.jump"
 	],
+	"repository":"https://github.com/lcnghia95/alias-go-to",
+	"license": "MIT",
 	"main": "./dist/extension.js",
 	"contributes": {
 		"configuration": {
