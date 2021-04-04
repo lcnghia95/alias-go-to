@@ -1,9 +1,10 @@
 # Alias Go To README
 
 This extension replace your alias to absolute path and auto input to your search file box.
-## Features
 
-I) Create file with path `.vscode/settings.json` on your project and map your alias same: 
+## Config your enviroment
+
+Create file with path `.vscode/settings.json` on your project and map your alias same: 
 
 ```
     "aliasGoTo.alias":{
@@ -11,10 +12,11 @@ I) Create file with path `.vscode/settings.json` on your project and map your al
     }
 ```
 
+Modify your shortcut in `aliasGoTo.jum` action.
 
-II) Go to line you want detect alias and search file
+## Features
 
-III) Enter action  `jump` or find and input short key by action `aliasGoTo.jump`
+I) Go to file with alias path
 
 
 
