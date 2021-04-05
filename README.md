@@ -15,7 +15,7 @@ Create file with path `.vscode/settings.json` on your project and map your alias
 ![alt text](https://raw.githubusercontent.com/lcnghia95/alias-go-to/master/images/setting.png "setting")
 
 
-Modify your shortcut at `aliasGoTo.jump` action.
+Modify your shortcut at `aliasGoTo.search` action.
 
 ![alt text](https://raw.githubusercontent.com/lcnghia95/alias-go-to/master/images/command.png "command")
 

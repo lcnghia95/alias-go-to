@@ -11,7 +11,8 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:aliasGoTo.jump"
+        "onCommand:aliasGoTo.search",
+        "onCommand:aliasGoTo.searchAbsolute"
 	],
 	"repository":"https://github.com/lcnghia95/alias-go-to",
 	"license": "MIT",
@@ -30,15 +31,24 @@
 		},
 		"commands": [
 			{
-				"command": "aliasGoTo.jump",
+				"command": "aliasGoTo.search",
+				"title": "Alias go to"
+			},
+			{
+				"command": "aliasGoTo.searchAbsolute",
 				"title": "Alias go to"
 			}
 		],
 		"keybindings": [
 			{
-			  "command": "aliasGoTo.jump",
+			  "command": "aliasGoTo.search",
 			  "key": "shift+alt+w",
 			  "mac": "shift+alt+w"
+			},
+			{
+			  "command": "aliasGoTo.searchAbsolute",
+			  "key": "shift+alt+q",
+			  "mac": "shift+alt+q"
 			}
 		]
 	},
