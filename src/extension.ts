@@ -8,14 +8,6 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	if(vscode.workspace.workspaceFolders !== undefined) {
 		workspacePath = vscode.workspace.workspaceFolders[0].uri.fsPath || '' ; 
-		message = `aliasGoTo: folder: ${workspacePath}` ;
-	
-		vscode.window.showInformationMessage(message);
-	} 
-	else {
-		message = "aliasGoTo: Working folder not found, open a folder an try again" ;
-	
-		vscode.window.showErrorMessage(message);
 	}
 	const jumpController = new JumpController();
 	const config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("aliasGoTo");

@@ -24,6 +24,7 @@ export const findCurrentWorkDir = (pathString: String): String => {
         return findCurrentWorkDir(splitPath.join('/'));
     }
 }
+
 export const checkExistPrefix = (pathFinal: string) => {
     const checkExistOnPath = CONSTANT.some(el => pathFinal.includes(el))
     if (checkExistOnPath) {
