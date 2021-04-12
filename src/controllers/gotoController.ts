@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { goToFileAliasPath, getSymbolAtCursor, getSymbols, findCurrentWorkDir, checkExistPrefix, compactPath, goToSymbols } from '../common/common';
+import { goToFileAliasPath, getSymbolAtCursor, getSymbols, findCurrentWorkDir, checkExistPrefix, compactPath, goToSymbols, getVariable } from '../common/common';
 
 export class JumpController {
   public constructor() {
@@ -11,7 +11,8 @@ export class JumpController {
     if (!editor) {
       return;
     }
-    const [fatherSymbol, childSymbol] = await getSymbolAtCursor(editor);
+    const listSymbol: (string | undefined)[] = await getSymbolAtCursor(editor);
+    const listSymbolInActiveFile = await getVariable(listSymbol[0])
   }
 
   public async searchAbsoluteFile(_map: Object, workspacePath: any) {

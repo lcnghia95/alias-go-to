@@ -49,46 +49,58 @@ export const getWordAtPosition = () => {
   return '';
 };
 
-export const getSymbolPrevious = (correctSymbol: string | undefined, wordAtPosition: string) => {
-  if (!correctSymbol) {
+export const getSymbolPrevious = (symbol: any, wordAtPosition: string) => {
+  if (!symbol) {
     return;
   }
+  const correctSymbol = symbol.replaceAll(/[^a-zA-Z0-9._]/g, ' ')
   const indexSymbolAtPosition = correctSymbol.indexOf(wordAtPosition);
-  let findInex, i = indexSymbolAtPosition - 1;
-  while (i > 0) {
-    const a = correctSymbol[i].match(/[a-z]|[A-Z]|\.|_/g);
-    if (!a) {
+  let findInex = indexSymbolAtPosition - 1;
+  while (findInex > 0) {
+    if (correctSymbol[findInex] === ' ') {
       break;
     }
-    i--;
+    findInex--;
   }
-  if (indexSymbolAtPosition - i < 3) {
+  if (indexSymbolAtPosition - findInex < 3) {
     return wordAtPosition;
   }
-  return correctSymbol.slice(i, indexSymbolAtPosition - 1);
+  return correctSymbol.slice(findInex, indexSymbolAtPosition - 1).replaceAll(' ', '');
 };
 
 // Refer from https://github.com/alefragnani/vscode-ext-selection/blob/master/src/index.ts
 // Thank so much !
-export const getSymbolAtCursor = async (editor: TextEditor) => {
+export const getSymbolAtCursor = async (editor: TextEditor): Promise<(string | undefined)[] >=> {
   const textInLine = getWordAtPosition();
   if (!editor.selection.isEmpty) {
-    return true;
+    return [];
   }
   const cursorWordRange = editor.document.getWordRangeAtPosition(editor.selection.active);
 
   if (!cursorWordRange) {
-    return false;
+    return [];
   }
 
   const newSe = new Selection(cursorWordRange.start.line, cursorWordRange.start.character, cursorWordRange.end.line, cursorWordRange.end.character);
   editor.selection = newSe;
   const wordAtPosition = editor.document.getText(newSe);
   const correctSymbol = textInLine?.split(' ').find(item => item.includes(wordAtPosition));
-  return [getSymbolPrevious(correctSymbol, wordAtPosition), wordAtPosition];
+  const listSymbol = getSymbolPrevious(correctSymbol, wordAtPosition)
+  return [...listSymbol.split('.'), wordAtPosition] || [];
 };
 
-export const getSymbols = async (symbol: string): Promise<vscode.DocumentSymbol[]> => {
+export const getVariable = async (symbol: string | undefined ): Promise<vscode.DocumentSymbol[]> => {
+  const document: vscode.TextDocument | any = vscode.window.activeTextEditor?.document;
+  const result = await vscode.commands.executeCommand<vscode.DocumentSymbol[]>(
+    'vscode.executeDocumentSymbolProvider',
+    document.uri
+  );
+  return result?.filter(item => {
+    return (item.kind === vscode.SymbolKind.Variable) && item.name === symbol;
+  }) || [];
+};
+
+export const getSymbols = async (symbol: string | undefined ): Promise<vscode.DocumentSymbol[]> => {
   const document: vscode.TextDocument | any = vscode.window.activeTextEditor?.document;
   const result = await vscode.commands.executeCommand<vscode.DocumentSymbol[]>(
     'vscode.executeDocumentSymbolProvider',
