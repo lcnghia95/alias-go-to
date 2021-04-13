@@ -130,6 +130,25 @@ export const goToSymbols = async (symbol: string) => {
   }
 };
 
+export const goToVaraiable = async (symbol: string) => {
+  const symbolEntries = await getVariable(symbol);
+
+  // await vscode.commands.executeCommand("workbench.action.quickOpen").then(async () => {
+  //   await vscode.commands.executeCommand('workbench.action.acceptSelectedQuickOpenItem');
+  // });
+  if (symbolEntries[0] && symbolEntries[0].range) {
+    const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
+    if (!editor) {
+      return;
+    }
+    let range = editor.document.lineAt(symbolEntries[0].range.start.line).range;
+    editor.selection = new vscode.Selection(range.start, range.start);
+    editor.revealRange(range);
+  }
+};
+
+
+
 export const goToFileAliasPath = async (_map: Object, workspacePath: string) => {
   const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
   if (!editor) {

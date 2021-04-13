@@ -1,8 +1,22 @@
 import * as vscode from 'vscode';
-import { goToFileAliasPath, getSymbolAtCursor, getSymbols, findCurrentWorkDir, checkExistPrefix, compactPath, goToSymbols, getVariable } from '../common/common';
+import { goToFileAliasPath, getSymbolAtCursor, getSymbols, findCurrentWorkDir, checkExistPrefix, compactPath, goToSymbols, getVariable, goToVaraiable } from '../common/common';
 
 export class JumpController {
   public constructor() {
+
+  }
+
+  private async _goToFileOnBase(_map: Object, workspacePath: any): Promise<any>{
+    const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
+    if (!editor) {
+      return;
+    }
+    const document: vscode.TextDocument = editor.document;
+    if(editor.selections.length === 1){
+      return
+    }
+    await this.searchAbsoluteFile(_map, workspacePath)
+    return await this._goToFileOnBase(_map, workspacePath)
 
   }
 
@@ -11,8 +25,26 @@ export class JumpController {
     if (!editor) {
       return;
     }
-    const listSymbol: (string | undefined)[] = await getSymbolAtCursor(editor);
-    const listSymbolInActiveFile = await getVariable(listSymbol[0])
+    const listSymbol: (string | any)[] = await getSymbolAtCursor(editor);
+    const listSymbolValid = listSymbol.filter(itm => itm)
+    if(listSymbolValid.length === 0){
+      return 
+    }
+    if(listSymbolValid.length === 1){
+      await goToVaraiable(listSymbolValid[0])
+      await this.searchAbsoluteFile(_map, workspacePath)
+      return await this._goToFileOnBase(_map, workspacePath)
+    }
+    if(listSymbolValid.length === 2 && listSymbolValid[0] === listSymbolValid[1] ){
+      await goToVaraiable(listSymbolValid[0])
+      await this.searchAbsoluteFile(_map, workspacePath)
+      return await this._goToFileOnBase(_map, workspacePath)
+    }
+    await goToVaraiable(listSymbolValid[0])
+    await this.searchAbsoluteFile(_map, workspacePath)
+    await this._goToFileOnBase(_map, workspacePath)
+    await goToSymbols(listSymbolValid[listSymbolValid.length - 1])
+    return await this.searchAbsoluteFile(_map, workspacePath)
   }
 
   public async searchAbsoluteFile(_map: Object, workspacePath: any) {
