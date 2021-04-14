@@ -11,18 +11,22 @@ export class JumpController {
     if (!editor) {
       return;
     }
-    const document: vscode.TextDocument = editor.document;
     if(editor.selections.length === 1){
+      await this.searchAbsoluteFile(_map, workspacePath)
       return
     }
-    await this.searchAbsoluteFile(_map, workspacePath)
-    return await this._goToFileOnBase(_map, workspacePath)
-
+    await this._goToFileOnBase(_map, workspacePath)
   }
 
   public async goToSymbolAlias(_map: Object, workspacePath: any) {
     const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
     if (!editor) {
+      return;
+    }
+    const beforePosition = editor.selection.active;
+    await vscode.commands.executeCommand('editor.action.goToTypeDefinition')
+    const afterPosition = editor.selection.active;
+    if(beforePosition !== afterPosition){
       return;
     }
     const listSymbol: (string | any)[] = await getSymbolAtCursor(editor);
@@ -43,8 +47,8 @@ export class JumpController {
     await goToVaraiable(listSymbolValid[0])
     await this.searchAbsoluteFile(_map, workspacePath)
     await this._goToFileOnBase(_map, workspacePath)
-    await goToSymbols(listSymbolValid[listSymbolValid.length - 1])
-    return await this.searchAbsoluteFile(_map, workspacePath)
+    return await goToSymbols(listSymbolValid[listSymbolValid.length - 1])
+    // return await this.searchAbsoluteFile(_map, workspacePath)
   }
 
   public async searchAbsoluteFile(_map: Object, workspacePath: any) {

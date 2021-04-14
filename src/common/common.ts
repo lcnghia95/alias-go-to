@@ -115,10 +115,6 @@ export const getSymbols = async (symbol: string | undefined ): Promise<vscode.Do
 
 export const goToSymbols = async (symbol: string) => {
   const symbolEntries = await getSymbols(symbol);
-
-  // await vscode.commands.executeCommand("workbench.action.quickOpen").then(async () => {
-  //   await vscode.commands.executeCommand('workbench.action.acceptSelectedQuickOpenItem');
-  // });
   if (symbolEntries[0] && symbolEntries[0].range) {
     const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
     if (!editor) {
@@ -128,14 +124,18 @@ export const goToSymbols = async (symbol: string) => {
     editor.selection = new vscode.Selection(range.start, range.start);
     editor.revealRange(range);
   }
+  await toCenter()
 };
 
+export const toCenter = async () =>{
+  let currentLineNumber = vscode.window.activeTextEditor?.selection.start.line;
+  await vscode.commands.executeCommand("revealLine", {
+    lineNumber: currentLineNumber,
+    at: "center"
+  });
+}
 export const goToVaraiable = async (symbol: string) => {
   const symbolEntries = await getVariable(symbol);
-
-  // await vscode.commands.executeCommand("workbench.action.quickOpen").then(async () => {
-  //   await vscode.commands.executeCommand('workbench.action.acceptSelectedQuickOpenItem');
-  // });
   if (symbolEntries[0] && symbolEntries[0].range) {
     const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
     if (!editor) {
