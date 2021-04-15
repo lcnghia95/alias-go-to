@@ -2,7 +2,7 @@
   "name": "alias-go-to",
   "displayName": "Alias Go To File",
   "description": "Go to file with path alias",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publisher": "lcnghia95",
   "engines": {
     "vscode": "^1.55.0"

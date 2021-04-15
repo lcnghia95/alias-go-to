@@ -7,15 +7,16 @@ export class JumpController {
   }
 
   private async _goToFileOnBase(_map: Object, workspacePath: any): Promise<any>{
-    const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
-    if (!editor) {
-      return;
-    }
-    if(editor.selections.length === 1){
+    while(true){
+      const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
+      if (!editor) {
+        return;
+      }
+      if(editor.document.lineCount > 2){
+        return;
+      }
       await this.searchAbsoluteFile(_map, workspacePath)
-      return
     }
-    await this._goToFileOnBase(_map, workspacePath)
   }
 
   public async goToSymbolAlias(_map: Object, workspacePath: any) {
